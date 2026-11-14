@@ -1,0 +1,13 @@
+# minimal Streamlit + FastAPI app, local Whisper, retrieval, and offline tests
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+pydantic>=2.9,<3
+python-dotenv>=1.0,<2
+httpx>=0.27,<1
+openai>=1.68,<3
+numpy>=1.26,<3
+faiss-cpu>=1.9,<2
+faster-whisper>=1.1,<2
+streamlit>=1.40,<2
+python-multipart>=0.0.18,<1
+pytest>=8,<10
