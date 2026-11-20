@@ -7,13 +7,8 @@ import argparse
 import sys
 from pathlib import Path
 
-# Support both `python ingest.py` inside this folder and `python -m trustbytes.ingest`.
-if __package__:
-    from .backend import rag
-    from .backend.schemas import SourceMetadata
-else:
-    from backend import rag
-    from backend.schemas import SourceMetadata
+from src import rag
+from src.schemas import SourceMetadata
 
 
 def split_text(text: str, size: int = 1800, overlap: int = 200) -> list[str]:

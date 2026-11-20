@@ -1,32 +1,42 @@
 # HPV Information Assistant
 IN PROGRESS! Stuff not linked properly yet
 
-A Singapore-focused HPV information chatbot using Retrieval-Augmented Generation (RAG). Uses Streamlit for chat interface, FastAPI to handle requests, and the backend retrieves information from reviewed SG healthcare sources before answers are generated with an LLM.
+## Motivation
 
-Learn more about HPV, vaccination and cervical cancer prevention, with grounded answers and citations from Singapore healthcare resources.
+Finding specific information about Human Papillomavirus (HPV) can be difficult, requiring navigating multiple webpages and official sources. Information can also change over time as national guidance is updated. For example, MOH's press release on *2 October 2026* announced the introduction of HPV9 (Gardasil 9) into the National Childhood and Adult Immunisation Schedules from January 2027. Such updates may not yet be reflected across existing webpages and tools, making it harder for users to find the latest recommendations in one place.
+
+This project aims to make Singapore-specific HPV information easier to access through a single chat interface, retrieving relevant information from manually reviewed sources and providing citations for users to verify.
+
+## Overview
+
+A Singapore-focused healthcare information chatbot about HPV. Users can ask questions about HPV types, transmission, vaccine types, eligibility, subsidies, and updated schedules.
+
+The application uses a Retrieval-Augmented Generation (RAG) pipeline to find relevant passages from its knowledge base and generate responses using an LLM. Built with Streamlit for the chat interface and FastAPI for backend request handling, it provides source citations alongside generated answers.
+
+
+Explore key information about HPV, including how it spreads, different HPV types, available vaccinations, screening, and cervical cancer prevention with reliable answers supported by Singapore healthcare resources.
 
 ```text
 hpv-rag/
-|-- frontend/
-|   `-- app.py
-|-- backend/
+|-- src/
+|   |-- -- ingestion
+|       |-- __init__.py
+|       |-- scrape.py
+|       |-- clean.py
+|       `-- ingest.py
 |   |-- __init__.py
 |   |-- main.py
 |   |-- schemas.py
 |   |-- rag.py
 |   |-- answerer.py
 |   |-- llm.py
-|   |-- stt.py  # speech to text
-|   `-- ingestion
-|       |-- __init__.py
-|       |-- scrape.py
-|       |-- clean.py
-|       `-- ingest.py
+|   `-- stt.py  # speech to text
 |-- data/
 |   |-- raw/
 |   |-- clean/
 |   |-- processed/
 |   `-- sources.json
+|-- app.py # streamlit frontend
 |-- storage/
 |-- requirements.txt
 |-- .env
