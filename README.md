@@ -21,7 +21,7 @@ hpv-rag/
 |-- src/
 |   |-- -- ingestion
 |       |-- __init__.py
-|       |-- scrape.py
+|       |-- scrape.py  # add on new sources here
 |       |-- clean.py
 |       `-- ingest.py
 |   |-- __init__.py
@@ -36,7 +36,7 @@ hpv-rag/
 |   |-- clean/
 |   |-- processed/
 |   `-- sources.json
-|-- app.py # streamlit frontend
+|-- app.py  # streamlit frontend
 |-- storage/
 |-- requirements.txt
 |-- .env
@@ -62,8 +62,8 @@ Copy `.env.example` to `.env` and fill in your API key.
 The ingestion workflow prepares source documents for retrieval.
 
 1. Define sources: Add source URLs and basic metadata to the `SOURCES` list in `scrape.py`
-2. Download: Run `scrape.py` to download the original HTML into `data/raw/` and update `sources.json` automatically
-3. Clean: Run `clean.py` to extract and structure the content into `data/clean/`
+2. Download: Run `python -m src.ingestion.scrape` to download the original HTML into `data/raw/` and update `sources.json` automatically
+3. Clean: Run `python -m src.ingestion.clean` to extract and structure the content into `data/clean/`
 4. Review: Manually inspect the cleaned documents and save approved versions under `data/reviewed/`
 5. Ingest: Run `ingest.py` to create chunks, embeddings and the retrieval index
 

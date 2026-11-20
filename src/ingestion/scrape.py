@@ -1,4 +1,9 @@
-# download source html into data/raw and update data/sources.json
+"""
+step 1:
+downloads html into data/raw and updates metadata in data/sources.json
+append new sources to SOURCES!
+running this scraper creates a html file per source scraped, or overwrites it if already exists
+"""
 
 import datetime
 import json
@@ -10,14 +15,14 @@ ROOT = pathlib.Path(__file__).resolve().parents[2] # go up 3 parent levels
 
 SOURCES = [
     {
-        "id": "s01",
+        "source_id": "s01",
         "title": "Preventing HPV Infection: HPV Vaccination",
         "publisher": "HealthHub",
         "url": "https://www.healthhub.sg/health-conditions/faqs-on-hpv-and-hpv-immunisation",
     },
     # can add on
     # {
-    # "id": "s02",
+    # "source_id": "s02",
     # "title":
     # "publisher":
     # "url":
@@ -37,24 +42,25 @@ def fetch():
             headers={"User-Agent": "Mozilla/5.0"},
         )
 
-        print(f"Downloading {source['id']} - {source['title']}")
+        print(f"Downloading {source['source_id']} - {source['title']}")
 
         with urllib.request.urlopen(request, timeout=45) as response:
             raw = response.read()
 
-    raw_path = raw_folder / f"{source['id']}.html"
-    raw_path.write_bytes(raw)
+        raw_path = raw_folder / f"{source['source_id']}.html"
+        raw_path.write_bytes(raw)
 
-    record = {
-        **source, # dictionary unpacking
-        "captured_at": datetime.datetime.now(
-            datetime.timezone.utc
-        ).isoformat(),
-    }
+        record = {
+            **source, # dictionary unpacking
+            "raw_path": f"data/raw/{source['source_id']}.html",
+            "captured_at": datetime.datetime.now(
+                datetime.timezone.utc
+            ).isoformat(),
+        }
 
-    records.append(record)
+        records.append(record)
 
-    print("Saved HTML: ", raw_path)
+        print("Saved HTML: ", raw_path)
     
     manifest_path = ROOT / "data" / "sources.json"
 
@@ -65,12 +71,12 @@ def fetch():
 
     # update existing records or append new ones instead of overwriting
     source_map = {
-        item["id"]: item
+        item["source_id"]: item
         for item in existing["sources"]
     }
 
     for record in records:
-        source_map[record["id"]] = record
+        source_map[record["source_id"]] = record
 
     manifest = {"sources": list(source_map.values())}
 

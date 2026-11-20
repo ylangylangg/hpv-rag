@@ -1,4 +1,12 @@
-# clean html into md
+"""
+step 2:
+reads source_id 
+extract and clean article content from saved html, into md
+preserves structural info (headings, tables, source metadata) for manual verification
+
+note: not generalised yet, only for s01
+"""
+
 import hashlib
 import json
 import pathlib
@@ -7,7 +15,7 @@ from bs4 import BeautifulSoup
 from markdownify import markdownify
 
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+ROOT = pathlib.Path(__file__).resolve().parents[2]
 SOURCE_ID = "s01"
 ARTICLE_SELECTOR = ".article-main-content"
 
@@ -25,7 +33,7 @@ def clean():
     source = None
 
     for record in manifest["sources"]:
-        if record["source_id"] == SOURCE_ID:
+        if record["id"] == SOURCE_ID:
             source = record
             break
 
@@ -132,7 +140,7 @@ def clean():
 
     # save short extraction report for s01
     audit = {
-        "source_id": SOURCE_ID,
+        "id": SOURCE_ID,
         "status": "extracted",
         "characters": len(markdown),
         "headings": headings,
